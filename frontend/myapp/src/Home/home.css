@@ -1,0 +1,158 @@
+@media screen and (max-width: 499px){
+    #divCreatePost form #contentPost{
+        width: 18rem;
+    }
+
+    #header{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #header div{
+        width: fit-content;
+        margin: auto;
+    }
+
+    #header #imgHeader{
+        width: 15rem;
+        text-align: center;
+        margin: auto;
+    }
+
+    #header #imgHeader img{
+        margin: 0.3rem 0.3rem 0 0;
+    }
+
+    #root #divContainerPost{
+        width: 75%;
+    }
+
+    #root #divContainerPost div{
+        margin-top: 1rem;
+    }
+
+    #root #divContainerPost div p{
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: auto;
+        padding-bottom: 1rem;
+    }
+
+    footer p{
+        font-size: 0.9rem;
+    }
+}
+/* -- FIN RESPONSIVE -- */
+
+
+#divContainerPost{
+    padding: 1rem 2rem 2rem;
+    border: 1px solid black;
+    width: 80%;
+    margin: 0 auto 1rem;
+    text-align: center;
+    overflow-y: scroll;
+    max-height: 20rem;
+}
+
+#divContainerPost h1{
+    border-radius: inherit;
+    border-bottom: 2px solid grey;
+    padding-bottom: 1rem;
+}
+
+#divContainerPost div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid grey;
+}
+
+#divContainerPost div h2{
+    margin-right: 0.5rem;
+    font-weight: normal;
+    font-size: 1rem;
+    font-style: italic;
+}
+
+#divContainerPost div h2:hover{
+    cursor: pointer;
+}
+
+#divContainerPost div h2 span{
+    margin-left: 0.5rem;
+    font-style: normal;
+}
+
+#divContainerPost div p{
+    display: flex;
+    align-items: center;
+    font-style: italic;
+}
+
+#divContainerPost div p i{
+    margin-left: 0.2rem;
+}
+
+#divContainerPost div p span{
+    margin-left: 0.5rem;
+}
+
+#divCreatePost{
+    width: 80%;
+    margin: 2rem auto;
+}
+
+#divCreatePost div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#divCreatePost div input{
+    border-radius: inherit;
+}
+
+#divCreatePost h1{
+text-align: center;
+}
+
+#divCreatePost form textarea{
+    width: 30rem;
+    height: 8rem;
+    margin-bottom: 1rem;
+}
+
+#divCreatePost form textarea::placeholder{
+    text-align: center;
+    line-height: 800%;
+    overflow: hidden;
+}
+
+#divCreatePost button{
+    line-height: 1.2rem;
+}
+
+#divPost{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+#divPost:hover{
+    cursor: pointer;
+}
+
+#divPost h1{
+    margin-right: 1.5rem;
+}
+
+#divPost p{
+    text-align: left;
+}
+
+#divPost p span{
+    margin-right: 0.7rem;
+    float: right;
+}

@@ -1,0 +1,34 @@
+/* FORMULAIRE */
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#submitButton{
+    align-self: center;
+    border-radius: 1rem;
+    border-style: groove;
+}
+
+form input{
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+    text-align: center;
+    line-height: 1.2rem;
+}
+
+form button{
+    border-radius: 1rem;
+    width: 6rem;
+    font-weight: 600;
+}
+
+form button:hover{
+    cursor: pointer;
+}
+
+input::placeholder{
+    text-align: center;
+}
+/* -- FIN FORMULAIRE -- */
