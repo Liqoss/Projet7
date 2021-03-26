@@ -1,21 +1,22 @@
+const fs = require('fs')
 const { post } = require("../app");
 const Post = require("../models/post");
 const Like = require('../models/like');
 
 // Création d'un post
 exports.createPost = (req, res, next) => {
-    console.log()
-    const post = new Post (
-        req.body.author,
-        req.body.userId,
-        req.body.post,
-        comments = 0,
-        commentsNumber = 0,
-        likes = 0,
-        usersLiked = [],
-        imageUrl = `${req.protocol}://${req.get('host')}/images/${req.body.file.filename}`,
-    );
+    let data = JSON.parse(req.body.object)
 
+    const post = new Post ({
+        ...data,
+        imageUrl : `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+        comments : 0,
+        commentsNumber : 0,
+        likes : 0,
+        usersLiked : []
+    });
+    console.log(data)
+    console.log(post)
     post.save()
     .then(() => res.status(201).json({message : 'Post créé !'}))
     .catch(error => res.status(400).json({error}));

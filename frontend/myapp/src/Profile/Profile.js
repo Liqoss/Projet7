@@ -9,6 +9,7 @@ class Profile extends React.Component{
             profile : []
         }
 
+        // Contrôle de la valeur des this
         this.getProfile = this.getProfile.bind(this);
         this.handleSignout = this.handleSignout.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -18,12 +19,14 @@ class Profile extends React.Component{
         this.getProfile();
     }
 
+    // Gestion de la déconnexion de l'utilisateur
     handleSignout(click){
         click.preventDefault()
         localStorage.clear()
         window.location = './'
     }
 
+    // Gestion de la suppression du compte de l'utilisateur
     handleDelete(click){
         // eslint-disable-next-line no-restricted-globals
         const submitData = {
@@ -50,6 +53,7 @@ class Profile extends React.Component{
         }
     }
 
+    // Récupération des informations de l'utilisateur pour les afficher dans la rubrique 'Mon compte'
     getProfile(){
         fetch('http://localhost:5000/api/auth/' + localStorage.getItem('userId'),{
             method : 'GET',

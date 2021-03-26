@@ -3,13 +3,8 @@ const db = require('../connection');
 const { use } = require('../routes/user');
 
 class Post {
-    constructor(author, userId, post, commentsNumber, likes, imageUrl) {
-        this.author = author,
-        this.userId = userId,
-        this.post = post,
-        this.commentsNumber = commentsNumber,
-        this.likes = likes,
-        this.imageUrl = imageUrl
+    constructor(post) {
+        this.post = post
     }
 
     static find() {
@@ -55,9 +50,9 @@ class Post {
 
     save() {
         return new Promise((resolve, reject) => {
-            let post = [this.post, this.author, this.userId, this.commentsNumber, this.likes, this.imageUrl];
+            let posts = [this.post.post, this.post.author, this.post.userId, this.post.commentsNumber, this.post.likes, this.post.imageUrl];
             let sql = "INSERT INTO post SET post = ?, author = ?, authorId = ?, commentsNumber = ?, likes = ?, imageUrl = ?, publishDate = NOW()"
-            db.query(sql, post, err => {
+            db.query(sql, posts, err => {
                     if (err) {
                         return reject(err)
                     }else{

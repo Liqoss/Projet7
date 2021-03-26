@@ -1,6 +1,5 @@
 import React from 'react';
 import './home.css';
-import Axios from 'axios'
 
 class Home extends React.Component{
     constructor(props){
@@ -12,6 +11,7 @@ class Home extends React.Component{
             user : []
         }
 
+        // Contrôle de la valeur des this
         this.handleContentChange = this.handleContentChange.bind(this)
         this.handleImageChange = this.handleImageChange.bind(this)
         this.fileInput = React.createRef()
@@ -23,15 +23,17 @@ class Home extends React.Component{
 
     componentDidMount(){
         this.getAuthor()
-        this.getAllPosts()   
+        this.getAllPosts()
     }
 
+    // Gestion des éléments passés dans le formulaire de création de post
     handleContentChange(e){
         this.setState({
             post : e.target.value
         })
     }
 
+    // Gestion de l'image uploadé par l'utilisateur
     handleImageChange(e){
         e.preventDefault()
         this.setState({
@@ -40,32 +42,22 @@ class Home extends React.Component{
         console.log(this.fileInput.current.files[0])
     }
 
+    // Envoi à l'API de tous les éléments nécessaire à la création d'un post
     handleSubmit(click){
         click.preventDefault();
-        const body = {
+        const object = {
             post : this.state.post,
             userId : localStorage.getItem('userId'),
             author : this.state.user.lastName + ' ' + this.state.user.firstName,
         }
 
-        const formData = new FormData();
-        formData.append("file", this.state.selectedFile);
-        Axios.post('http://localhost:5000/api/post', {
-        post: {
-        post: this.state.post,
-        userId: localStorage.getItem('userId'),
-        file: this.state.selectedFile
-        }
-        }).then(this.getAllPosts());
-
-        /*const submitData = new FormData();
-        submitData.append('body', JSON.stringify(body));
+        const submitData = new FormData();
+        submitData.append('object', JSON.stringify(object));
         submitData.append('file', this.state.selectedFile)
 
         fetch('http://localhost:5000/api/post/',{
             method : 'POST',
             headers : {
-                'Content-Type' : 'application/json',
                 'Accept' : 'application/json',
                 'Authorization' : 'Bearer ' + localStorage.getItem('token')
             },
@@ -73,15 +65,17 @@ class Home extends React.Component{
         })
         .then(() => {
             this.getAllPosts()
-        })*/
+        })
     }
 
+    // Gestion du clique sur l'un des posts affichés
     handlePostClick(click){
         click.preventDefault();
         let id = click.target.className;
         window.location = "./PostDetails?id=" + id;
     }
 
+    // Récupération des posts dans la BDD depuis l'API
     getAllPosts(){
         setTimeout(() => {
             fetch('http://localhost:5000/api/post/',{
@@ -94,7 +88,12 @@ class Home extends React.Component{
             })
             .then(posts => posts.json())
             .then(posts => {
-                this.setState({posts}) 
+                this.setState({posts})
+                console.log(posts.imageUrl)
+                if (posts.imageUrl === undefined){
+                    let img = document.getElementById('image')
+                    img.remove()
+                }
             })
             .catch(err=> {
                 console.log('err', err);
@@ -103,6 +102,7 @@ class Home extends React.Component{
         }, 300)
     }
 
+    // Récupération des informations de l'utilisateur (notamment pour compléter les infos nécessaire à la création d'un post)
     getAuthor(){
         setTimeout(() => {
             fetch('http://localhost:5000/api/auth/' + localStorage.getItem('userId'), {
@@ -141,10 +141,13 @@ class Home extends React.Component{
                 <div id='divContainerPost'>
                     <h1>Fil d'actualité :</h1>
                     {this.state.posts.map((post) => 
-                        <div key={post.id}>
+                        <div id='divChildPost' key={post.id}>
                             <h2 className={post.id} onClick={this.handlePostClick}>
                                 {post.author} :
-                                <span className={post.id}>{post.post}</span>
+                                <div>
+                                    <span className={post.id}>{post.post}</span>
+                                    <span><img src={'http://localhost:5000/images/' + post.imageUrl.split('/images')[2]} id='image' className={post.id} alt='postImage'></img></span>
+                                </div>
                             </h2>
                             <p>
                                 {post.likes}<i className="far fa-thumbs-up"></i>

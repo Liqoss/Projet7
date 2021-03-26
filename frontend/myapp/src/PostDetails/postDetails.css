@@ -1,6 +1,20 @@
 @media screen and (max-width: 499px){
     .divLoginSignup #divPostDetails h1{
         margin: auto;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .divLoginSignup #divPostDetails{
+        display: inherit;
+    }
+
+    .divLoginSignup #divPostDetails h1 div span img{
+        width: 15rem;
+    }
+
+    .divLoginSignup #divPostDetails h1 div span{
+        margin-left: inherit;
     }
 
     .divLoginSignup #divPostDetails p{
@@ -22,6 +36,8 @@
     }
 }
 
+/* -- FIN RESPONSIVE -- */
+
 #divPostDetails{
     display: flex;
     flex-direction: column;
@@ -33,15 +49,29 @@
 }
 
 #divPostDetails h1{
+    display: flex;
+    align-items: center;
     margin-right: 1.5rem;
     font-weight: bolder;
     padding: 0.5rem;
     text-align: justify;
 }
 
-#divPostDetails h1 span{
+#divPostDetails h1 div{
+    display: flex;
+    flex-direction: column;
+}
+
+#divPostDetails h1 div span{
+    text-align: center;
     margin-left: 1.5rem;
     font-weight: normal;
+}
+
+#divPostDetails h1 div span img{
+    margin-top: 0.5rem;
+    max-width: 20rem;
+    border-radius: 2rem;
 }
 
 #divPostDetails p{
@@ -116,4 +146,5 @@
 #divComments p span i:hover{
     transform: scale(1.2);
     cursor: pointer;
+    color: red;
 }

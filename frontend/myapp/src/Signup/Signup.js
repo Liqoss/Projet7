@@ -20,7 +20,7 @@ class Signup extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    // Fonctions handleChange() permettant de récupérer les informations passées par l'utilisateur
+    // Méthodes 'handle...' permettant de récupérer les informations passées par l'utilisateur
     handleFirstNameChange(e){
         this.setState({
             firstName : e.target.value
@@ -45,6 +45,7 @@ class Signup extends React.Component {
         });
     };
 
+    // Méthode permettant de s'assurer de la remise à zéro du formulaire
     resetForm() {
         this.setState({
             lastName: '',
@@ -55,10 +56,10 @@ class Signup extends React.Component {
         });
     }
 
+    // Envoi à l'API des informations nécessaire à la création du compte de l'utilisateur
     handleSubmit(click){
         click.preventDefault();
 
-        // Regroupement dans un FormData des informations d'inscription
         const submitData = {
             firstName : this.state.firstName,
             lastName : this.state.lastName,
@@ -66,7 +67,6 @@ class Signup extends React.Component {
             password : this.state.password
         };
 
-        // Envoi au back des informations d'inscription
         fetch('http://localhost:5000/api/auth/signup',{
             method : 'POST',
             headers: {
@@ -75,11 +75,11 @@ class Signup extends React.Component {
             },
             body: JSON.stringify(submitData)
         })
-        // Redirection de l'utilisateur à la home page une fois connecté
+
         .then(() =>{
             window.location = './'
         })
-        // Gestion des erreurs
+        
         .catch(err=> {
             console.log('err', err);
             alert(err.error);

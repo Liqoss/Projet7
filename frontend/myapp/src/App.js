@@ -12,7 +12,6 @@ function App() {
 
   return (
     <Router>
-
       <>
         <Switch>
           <Route path='/' exact component={Header} />
@@ -34,7 +33,6 @@ function App() {
       </main>
 
       <footer><p>© 2021, groupomania.com, Inc. ou ses filiales.</p></footer>
-     
     </Router>
   );
 }

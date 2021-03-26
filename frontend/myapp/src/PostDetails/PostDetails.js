@@ -13,6 +13,7 @@ class PostDetails extends React.Component{
             like : 0
         }
 
+        // Contrôle de la valeur des this
         this.getAuthor = this.getAuthor.bind(this)
         this.getPost = this.getPost.bind(this);
         this.handleCommentChange = this.handleCommentChange.bind(this);
@@ -32,6 +33,7 @@ class PostDetails extends React.Component{
         this.getLikes();
     };
 
+    // Récupération des informations de l'utilisateur (notamment pour compléter les informations nécessaire à la création d'un commentaire)
     getAuthor(){
         fetch('http://localhost:5000/api/auth/' + localStorage.getItem('userId'), {
             method : 'GET',
@@ -53,6 +55,7 @@ class PostDetails extends React.Component{
         })
     }
 
+    // Récupération du post sur lequel l'utilisateur a cliqué précédement
     getPost() {
         let idPost = window.location.search.substr('4');
 
@@ -68,6 +71,11 @@ class PostDetails extends React.Component{
         .then(post => post.json())
         .then(post => {
             this.setState({post})
+            console.log(post.imageUrl)
+            if (parseInt(post.imageUrl) === 0){
+                let img = document.getElementById('image')
+                img.remove()
+            }
         })
         .catch(err=> {
             console.log('err', err);
@@ -75,6 +83,7 @@ class PostDetails extends React.Component{
         })
     }
 
+    // Stockage dans le state de la valeur de l'input commentaire
     handleCommentChange(e){
         e.preventDefault();
         this.setState({
@@ -82,6 +91,7 @@ class PostDetails extends React.Component{
         })
     }
 
+    // Envoi à l'API de toutes les informations nécessaire à la création d'un commentaire au post affiché sur la page
     handleSubmit(click){
         click.preventDefault();
 
@@ -106,6 +116,7 @@ class PostDetails extends React.Component{
         })
     }
 
+    // Récupération depuis l'API de tous les commentaires asscociés au post affiché sur la page
     getComment(){
         let idPost = window.location.search.substr('4');
 
@@ -130,12 +141,13 @@ class PostDetails extends React.Component{
         })
     }
 
+    // Gestion de la suppression du post (seul l'auteur du post ou l'administrateur du site peut accéder à cette fonction)
     handleDeletePost(click){
         let idPost = click.target.id;
         console.log(this.state.post.authorId)
         click.preventDefault();
         // eslint-disable-next-line no-restricted-globals
-        if (this.state.post.authorId == localStorage.getItem('userId') || localStorage.getItem('userId') === 9){
+        if (this.state.post.authorId === parseInt(localStorage.getItem('userId')) || localStorage.getItem('userId') === 9){
             if (window.confirm('Voulez-vous vraiment supprimer le post ?')){
                 fetch('http://localhost:5000/api/post/' + idPost, {
                     method : 'DELETE',
@@ -156,6 +168,7 @@ class PostDetails extends React.Component{
         }
     }
 
+    // Gestion de la suppression des commentaires (seul l'auteur des commentaires ou l'administrateur du site peut accéder à cette fonction)
     handleCommentDelete(click){
         click.preventDefault();
         // eslint-disable-next-line no-restricted-globals
@@ -188,6 +201,7 @@ class PostDetails extends React.Component{
         }
     }
 
+    // Méthode permettant de réajuster dans la BDD le nombre de commentaire associé au post (notamment lors de la suppression d'un commentaire)
     adjustCommentsNumber(){
         fetch('http://localhost:5000/api/post/' + window.location.search.substr('4'), {
             method : 'PUT',
@@ -204,6 +218,7 @@ class PostDetails extends React.Component{
         })
     }
 
+    // Gestion du like et du dislike du post
     handleLike(click){
         const submitData = {
             postId : click.target.id,
@@ -230,6 +245,7 @@ class PostDetails extends React.Component{
         })
     }
 
+    // Méthode permettant au chargement de la page de savoir si l'utilisateur a déjà liké ou non le post
     getLikes(){
         const submitData = {
             postId : window.location.search.substr('4'),
@@ -266,7 +282,11 @@ class PostDetails extends React.Component{
                 <div id='divPostDetails'>
                     <h1>
                         {this.state.post.author} :
-                        <span>{this.state.post.post}</span>
+                        <div>
+                            <span>{this.state.post.post}</span>
+                            <span><img src={this.state.post.imageUrl} id='image' alt='postImage'></img></span>
+                        </div>
+                        
                     </h1>
                     <p>
                         {this.state.post.likes}<i id={this.state.post.id} onClick={this.handleLike} className="far fa-thumbs-up"></i>
