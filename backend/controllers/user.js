@@ -1,6 +1,8 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const decode = require('jwt-decode');
+
 
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
@@ -45,7 +47,9 @@ exports.login = (req, res, next) => {
 };
 
 exports.findUser = (req, res, next) => {
-    User.findOneById(req.params.id)
+    const userId =  decode(req.params.id).userId;
+    
+    User.findOneById(userId)
     .then((profile) => res.status(200).json(profile))
     .catch((error) => res.status(400).json({error}));
 }

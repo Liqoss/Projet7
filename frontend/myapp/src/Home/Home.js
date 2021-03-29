@@ -44,10 +44,11 @@ class Home extends React.Component{
 
     // Envoi à l'API de tous les éléments nécessaire à la création d'un post
     handleSubmit(click){
+        console.log(this.state.user)
         click.preventDefault();
         const object = {
             post : this.state.post,
-            userId : localStorage.getItem('userId'),
+            userId : this.state.user.id,
             author : this.state.user.lastName + ' ' + this.state.user.firstName,
         }
 
@@ -105,7 +106,7 @@ class Home extends React.Component{
     // Récupération des informations de l'utilisateur (notamment pour compléter les infos nécessaire à la création d'un post)
     getAuthor(){
         setTimeout(() => {
-            fetch('http://localhost:5000/api/auth/' + localStorage.getItem('userId'), {
+            fetch('http://localhost:5000/api/auth/' + localStorage.getItem('token'), {
                 method : 'GET',
                 headers : {
                     'Content-Type' : 'application/json',
@@ -131,10 +132,10 @@ class Home extends React.Component{
                 <div id='divCreatePost'>
                     <h1>Postez un message !</h1>
                     <form>
-                        <div>
+                        <label for='contentPost'>
                             <textarea type='text' name='post' id='contentPost' placeholder='Message ...' onChange={this.handleContentChange} required></textarea>
                             <input type="file" accept="image/png, image/jpeg, image/gif" onChange={this.handleImageChange} ref={this.fileInput}></input>
-                        </div>
+                        </label>
                         <button type='submit' onClick={this.handleSubmit}>Publier</button>
                     </form>
                 </div>

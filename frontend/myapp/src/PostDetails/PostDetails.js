@@ -35,7 +35,7 @@ class PostDetails extends React.Component{
 
     // Récupération des informations de l'utilisateur (notamment pour compléter les informations nécessaire à la création d'un commentaire)
     getAuthor(){
-        fetch('http://localhost:5000/api/auth/' + localStorage.getItem('userId'), {
+        fetch('http://localhost:5000/api/auth/' + localStorage.getItem('token'), {
             method : 'GET',
             headers : {
                 'Content-Type' : 'application/json',
@@ -97,7 +97,7 @@ class PostDetails extends React.Component{
 
         const submitData = {
             comment : this.state.comment,
-            userId : localStorage.getItem('userId'),
+            userId : this.state.user.id,
             postId : window.location.search.substr('4'),
             author : this.state.user.lastName + ' ' + this.state.user.firstName
         };
@@ -147,7 +147,7 @@ class PostDetails extends React.Component{
         console.log(this.state.post.authorId)
         click.preventDefault();
         // eslint-disable-next-line no-restricted-globals
-        if (this.state.post.authorId === parseInt(localStorage.getItem('userId')) || localStorage.getItem('userId') === 9){
+        if (this.state.post.authorId === parseInt(this.state.user.id) || parseInt(this.state.user.id) === 9){
             if (window.confirm('Voulez-vous vraiment supprimer le post ?')){
                 fetch('http://localhost:5000/api/post/' + idPost, {
                     method : 'DELETE',
@@ -172,9 +172,8 @@ class PostDetails extends React.Component{
     handleCommentDelete(click){
         click.preventDefault();
         // eslint-disable-next-line no-restricted-globals
-        console.log(sessionStorage.getItem('authorId'))
-        console.log(click.target.id)
-        if (sessionStorage.getItem('authorId') === localStorage.getItem('userId') || localStorage.getItem('userId') === 9){
+        console.log(this.state.user)
+        if (parseInt(sessionStorage.getItem('authorId')) === this.state.user.id || this.state.user.id === 9){
             if (window.confirm('Voulez-vous vraiment supprimer le commentaire ?')){
                 const idComment = click.target.id;
 
@@ -222,7 +221,7 @@ class PostDetails extends React.Component{
     handleLike(click){
         const submitData = {
             postId : click.target.id,
-            userId : localStorage.getItem('userId')
+            userId : this.state.user.id
         }
 
         click.preventDefault();
@@ -249,7 +248,7 @@ class PostDetails extends React.Component{
     getLikes(){
         const submitData = {
             postId : window.location.search.substr('4'),
-            userId : localStorage.getItem('userId')
+            userId : this.state.user.id
         }
 
         fetch('http://localhost:5000/api/post/hasLiked', {

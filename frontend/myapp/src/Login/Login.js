@@ -53,7 +53,6 @@ class Login extends React.Component {
         .then(async (response) => {
                 this.setState({connected : true});
                 localStorage.setItem('token', response.token)
-                localStorage.setItem('userId', response.userId)
         })
         .catch(err => {
             console.log('err', err)
@@ -73,12 +72,12 @@ class Login extends React.Component {
             <>
                 <img src={`${process.env.PUBLIC_URL}/assets/images/logo.png`} alt="logo" id='logo'/>
                 <form>
-                    <div>
+                    <label for='emailLogin'>
                         <input type='email' name='email' id='emailLogin' placeholder='E-mail' onChange={this.handleEmailChange} required></input>
-                    </div>
-                    <div>
+                    </label>
+                    <label for='passwordLogin'>
                         <input type='password' name='password' id='passwordLogin' placeholder='Mot de passe' onChange={this.handlePasswordChange} required></input>
-                    </div>
+                    </label>
                     <button type='submit' onClick={this.handleSubmit}>Connexion</button>
                 </form>
             </>

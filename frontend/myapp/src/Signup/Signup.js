@@ -92,18 +92,18 @@ class Signup extends React.Component {
             <>
                 <img src={`${process.env.PUBLIC_URL}/assets/images/logo.png`} alt="logo" id='logo'/>
                 <form>
-                    <div>
+                    <label for='firstName'>
                         <input type='text' id='firstName' name='firstName' value={this.state.firstName} onChange={this.handleFirstNameChange} placeholder='Prénom' required></input>
-                    </div>
-                    <div>
+                    </label>
+                    <label for='lastName'>
                         <input type='text' id='lastName' name='lastName' value={this.state.lastName} onChange={this.handleLastNameChange} placeholder='Nom' required></input>
-                    </div>
-                    <div>
+                    </label>
+                    <label for='email'>
                         <input type='email' id='email' name='email' value={this.state.email} onChange={this.handleEmailChange} placeholder='Adresse e-mail' required></input>
-                    </div>
-                    <div>
+                    </label>
+                    <label for='password'>
                         <input type='password' id='password' name='password' value={this.state.password} onChange={this.handlePasswordChange} placeholder='Mot de passe' required></input>
-                    </div>
+                    </label>
                     <button type='submit' onClick={this.handleSubmit}>Inscription</button>
                 </form>
             </>

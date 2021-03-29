@@ -127,13 +127,13 @@
     margin: 2rem auto;
 }
 
-#divCreatePost div{
+#divCreatePost label{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#divCreatePost div input{
+#divCreatePost label input{
     border-radius: inherit;
 }
 

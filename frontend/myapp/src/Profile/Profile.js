@@ -30,7 +30,7 @@ class Profile extends React.Component{
     handleDelete(click){
         // eslint-disable-next-line no-restricted-globals
         const submitData = {
-            id : localStorage.getItem('userId')
+            id : this.state.profile.id
         }
         if ( window.confirm('Voulez-vous vraiment supprimer votre compte ?')){
             fetch('http://localhost:5000/api/auth/delete',{
@@ -55,7 +55,7 @@ class Profile extends React.Component{
 
     // Récupération des informations de l'utilisateur pour les afficher dans la rubrique 'Mon compte'
     getProfile(){
-        fetch('http://localhost:5000/api/auth/' + localStorage.getItem('userId'),{
+        fetch('http://localhost:5000/api/auth/' + localStorage.getItem('token'),{
             method : 'GET',
             headers : {
                 'Content-Type' : 'application/json',
